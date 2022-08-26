@@ -28,28 +28,26 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     revalidate: 60 * 60, // value in seconds, how often ISR will trigger on the server
   };
 };
-function Home({ menuData }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return (
-    <>
-      <BaseSeo />
-      <div className="py-10">
-        <header className="mb-4">
-          <div className="container" />
-        </header>
-        <main>
-          <div className="container">
-            {menuData?.menu?.items?.map((m) => {
-              if (!m) {
-                return null;
-              }
-              return <HomepageBlock key={m.id} menuItem={m} />;
-            })}
-          </div>
-        </main>
-      </div>
-    </>
-  );
-}
+const Home = ({ menuData }: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <>
+    <BaseSeo />
+    <div className="py-10">
+      <header className="mb-4">
+        <div className="container" />
+      </header>
+      <main>
+        <div className="container">
+          {menuData?.menu?.items?.map((m) => {
+            if (!m) {
+              return null;
+            }
+            return <HomepageBlock key={m.id} menuItem={m} />;
+          })}
+        </div>
+      </main>
+    </div>
+  </>
+);
 
 export default Home;
 
