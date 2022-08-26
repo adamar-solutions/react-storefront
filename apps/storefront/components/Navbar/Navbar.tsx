@@ -45,9 +45,19 @@ export const Navbar = () => {
     ) || 0;
 
   return (
-    <>
-      <div className={clsx(styles.navbar)}>
+    <div className={clsx(styles.navbar)}>
         <div className={clsx(styles.inner)}>
+          <NavIconButton
+            icon={isBurgerOpen ? "close" : "menu"}
+            className={`lg:hidden ${isBurgerOpen ? "ml-4" : "ml-2"}`}
+            onClick={() => {
+              if (isBurgerOpen) {
+                setBurgerOpen(false);
+              } else {
+                setBurgerOpen(true);
+              }
+            }}
+          />
           <div className="flex-1 h-full hidden xs:flex">
             <Menu />
           </div>
@@ -78,19 +88,13 @@ export const Navbar = () => {
                 <NavIconButton icon="spyglass" data-testid="searchIcon" />
               </a>
             </Link> */}
-            <NavIconButton
-              icon="menu"
-              className="ml-2 lg:hidden"
-              onClick={() => setBurgerOpen(true)}
-            />
           </div>
         </div>
+        <div>
+          {" "}
+          <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
+        </div>
       </div>
-      <div>
-        {" "}
-        <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
-      </div>
-    </>
   );
 };
 
