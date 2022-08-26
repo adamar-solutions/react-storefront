@@ -7,12 +7,12 @@
 }
 
 .backdrop {
-  @apply absolute z-0 top-0 right-0 w-full h-full;
+  @apply absolute z-10 top-0 right-0 w-full h-full;
   background-color: rgba(57, 64, 82, 0.6);
 }
 
 .body {
-  @apply relative z-10 bg-white h-full overflow-y-scroll py-6 px-7 flex flex-col;
+  @apply relative z-50 bg-white h-full overflow-y-hidden overflow-x-hidden py-2 flex flex-col;
   width: 93.846153846153846%;
   max-width: 366px;
 }
@@ -30,7 +30,7 @@
 }
 
 .collapse-main {
-  @apply text-main text-lg leading-[1.2em] font-bold block w-full text-left;
+  @apply text-main text-lg leading-[1.2em] font-bold block w-full text-left mx-[25px];
 }
 
 .collapse-main--active {
@@ -38,7 +38,7 @@
 }
 
 .collapse-sub {
-  @apply text-main text-[2rem] leading-[1.2em] font-bold flex w-full;
+  @apply text-main text-[2rem] leading-[1.2em] flex w-full mx-[25px];
 }
 
 .collapse-sub svg {

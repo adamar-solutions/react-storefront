@@ -20167,6 +20167,7 @@ export type ProductCardFragment = {
     attribute: { __typename?: "Attribute"; slug?: string | null };
     values: Array<{ __typename?: "AttributeValue"; name?: string | null }>;
   }>;
+  isAvailable?: boolean;
 };
 
 export type ProductDetailsFragment = {
@@ -22857,6 +22858,7 @@ export const ProductCardFragmentDoc = gql`
     id
     slug
     name
+    isAvailable
     translation(languageCode: $locale) {
       id
       name

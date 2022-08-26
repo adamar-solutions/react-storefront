@@ -1,4 +1,4 @@
-import { useAuthState } from "@saleor/sdk";
+// import { useAuthState } from "@saleor/sdk";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,14 +13,14 @@ import { Menu } from "./Menu";
 import styles from "./Navbar.module.css";
 import NavIconButton from "./NavIconButton";
 import Stamp from "./Stamp";
-import UserMenu from "./UserMenu";
+// import UserMenu from "./UserMenu";
 
-export function Navbar() {
+export const Navbar = () => {
   const paths = usePaths();
   const router = useRouter();
 
   const [isBurgerOpen, setBurgerOpen] = useState(false);
-  const { authenticated } = useAuthState();
+  // const { authenticated } = useAuthState();
   const { checkout } = useCheckout();
 
   useEffect(() => {
@@ -30,6 +30,11 @@ export function Navbar() {
         setBurgerOpen(false);
       }
     });
+    if (isBurgerOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
   });
 
   const counter =
@@ -54,7 +59,7 @@ export function Navbar() {
             </Link>
           </div>
           <div className="flex-1 flex justify-end">
-            {!authenticated ? (
+            {/* {!authenticated ? (
               <Link href={paths.account.login.$url()} passHref>
                 <a href="pass">
                   <NavIconButton icon="user" aria-hidden="true" />
@@ -62,17 +67,17 @@ export function Navbar() {
               </Link>
             ) : (
               <UserMenu />
-            )}
+            )} */}
             <Link href={paths.cart.$url()} passHref>
               <a href="pass" className="ml-2 hidden xs:flex">
                 <NavIconButton icon="bag" aria-hidden="true" counter={counter} />
               </a>
             </Link>
-            <Link href={paths.search.$url()} passHref>
-              <a href="pass" className="hidden lg:flex ml-2">
+            {/* <Link href={paths.search.$url()} passHref>
+              <a href="pass" className="hidden xs:flex ml-2">
                 <NavIconButton icon="spyglass" data-testid="searchIcon" />
               </a>
-            </Link>
+            </Link> */}
             <NavIconButton
               icon="menu"
               className="ml-2 lg:hidden"
@@ -81,9 +86,12 @@ export function Navbar() {
           </div>
         </div>
       </div>
-      <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
+      <div>
+        {" "}
+        <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
+      </div>
     </>
   );
-}
+};
 
 export default Navbar;

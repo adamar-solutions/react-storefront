@@ -1,9 +1,9 @@
 .navbar {
-  @apply bg-white text-main sticky top-0 z-50;
+  @apply bg-white text-main sticky top-0 z-50 border-b-2;
 }
 
 .inner {
-  @apply container h-18 flex flex-nowrap items-center;
+  @apply container h-10 flex flex-nowrap items-center;
 }
 
 .logo {
@@ -60,7 +60,7 @@
 }
 
 .nav-icon-counter {
-  @apply absolute bottom-2 right-2 translate-x-[50%] translate-y-[50%] bg-brand text-white flex justify-center items-center rounded text-[1rem] leading-[1rem] h-[14px] px-1;
+  @apply absolute bottom-2 right-2 translate-x-[50%] translate-y-[50%] bg-[#888888] text-white flex justify-center items-center rounded-full text-[1rem] leading-[1rem] h-[14px] px-1;
   min-width: theme("spacing.4");
 }
 

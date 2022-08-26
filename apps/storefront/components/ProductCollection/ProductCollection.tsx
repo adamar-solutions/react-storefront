@@ -25,16 +25,18 @@ export interface ProductCollectionProps {
   };
   allowMore?: boolean;
   perPage?: number;
+  mainView?: boolean;
   setCounter?: (value: number) => void;
 }
 
-export function ProductCollection({
+export const ProductCollection = ({
   filter,
   sortBy,
   setCounter,
   allowMore = true,
   perPage = 4,
-}: ProductCollectionProps) {
+  mainView = false,
+}: ProductCollectionProps) => {
   const t = useIntl();
   const { query } = useRegions();
 
@@ -83,11 +85,11 @@ export function ProductCollection({
   return (
     <div>
       <ul
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"
+        className={`grid gap-2 ${mainView ? "grid-cols-2" : "grid-cols-1"}`}
         data-testid="productsList"
       >
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} productCardView={mainView} />
         ))}
       </ul>
       {allowMore && (
@@ -100,6 +102,6 @@ export function ProductCollection({
       )}
     </div>
   );
-}
+};
 
 export default ProductCollection;

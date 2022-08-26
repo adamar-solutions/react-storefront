@@ -6,8 +6,7 @@ export interface StockToggleProps {
   onChange: (checked: boolean) => void;
 }
 
-export function StockToggle({ enabled, onChange }: StockToggleProps) {
-  return (
+export const StockToggle = ({ enabled, onChange }: StockToggleProps) => (
     <div className="inline-block py-2 px-2">
       <Switch.Group>
         <Switch
@@ -23,10 +22,9 @@ export function StockToggle({ enabled, onChange }: StockToggleProps) {
             )}
           />
         </Switch>
-        <Switch.Label className="ml-2 text-base">In stock</Switch.Label>
+        <Switch.Label className="ml-2 text-base">В наличии</Switch.Label>
       </Switch.Group>
     </div>
-  );
-}
+  )
 
 export default StockToggle;
