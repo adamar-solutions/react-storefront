@@ -42,11 +42,11 @@
 }
 
 .collapse-main--active {
-  @apply text-brand mb-4 pb-4 border-b border-main-4;
+  @apply text-brand;
 }
 
 .collapse-sub {
-  @apply text-main text-[2rem] leading-[1.2em] flex w-full mx-[25px];
+  @apply text-main text-[2rem] leading-[1.2em] flex w-full mx-[55px];
 }
 
 .collapse-sub svg {
