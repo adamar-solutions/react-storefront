@@ -24,9 +24,9 @@ export interface Channel {
 }
 
 export const DEFAULT_CHANNEL: Channel = {
-  slug: "default-channel",
-  name: "United States Dollar",
-  currencyCode: "USD",
+  slug: "default-channel-kz",
+  name: "Kazakhstani Tenge",
+  currencyCode: "KZT",
 };
 
 export const CHANNELS: Channel[] = [
@@ -45,6 +45,11 @@ export const CHANNELS: Channel[] = [
     slug: "channel-vi",
     name: "Việt Nam đồng",
     currencyCode: "VND",
+  },
+  {
+    slug: "default-channel-usd",
+    name: "United States Dollar",
+    currencyCode: "USD",
   },
 ];
 
