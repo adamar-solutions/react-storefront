@@ -47,7 +47,7 @@ export const CHANNELS: Channel[] = [
     currencyCode: "VND",
   },
   {
-    slug: "default-channel-lpl",
+    slug: "default-channel",
     name: "United States Dollar",
     currencyCode: "USD",
   },
