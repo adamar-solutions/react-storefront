@@ -24,7 +24,7 @@ export interface Channel {
 }
 
 export const DEFAULT_CHANNEL: Channel = {
-  slug: "default-channel-kz",
+  slug: "default-channel-lpl",
   name: "Kazakhstani Tenge",
   currencyCode: "KZT",
 };
