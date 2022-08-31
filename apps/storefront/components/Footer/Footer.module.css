@@ -1,5 +1,5 @@
 .footer {
-  @apply fixed bottom-0;
+  @apply fixed bottom-0 w-full;
 }
 
 .footer-inner {
