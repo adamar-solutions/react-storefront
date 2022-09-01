@@ -11,7 +11,7 @@ import { useCheckout } from "@/lib/providers/CheckoutProvider";
 
 const externalCheckoutBaseUrl = process.env.NEXT_PUBLIC_CHECKOUT_URL;
 
-function Cart() {
+const Cart = () => {
   const t = useIntl();
   const paths = usePaths();
   const { loading, checkoutError, checkout, checkoutToken } = useCheckout();
@@ -92,7 +92,7 @@ function Cart() {
       </div>
     </>
   );
-}
+};
 
 export default Cart;
 

@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 
 import { Layout, RichText, VariantSelector } from "@/components";
 import { AttributeDetails } from "@/components/product/AttributeDetails";
-// import { Slider } from "@/components/product/SlideShow";
+import { Slider } from "@/components/product/SlideShow";
 // import { ProductGallery } from "@/components/product/ProductGallery";
 import { useRegions } from "@/components/RegionsProvider";
 import { ProductPageSeo } from "@/components/seo/ProductPageSeo";
@@ -168,7 +168,7 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
       <main className={clsx("grid grid-cols-1 max-h-full overflow-auto md:overflow-hidden")}>
         <div className="col-span-1">
           {/* <ProductGallery product={product} selectedVariant={selectedVariant} /> */}
-          {/* <Slider product={product} /> */}
+          <Slider product={product} />
         </div>
         <div className="space-y-5 mt-4 md:mt-0 px-2">
           <div>

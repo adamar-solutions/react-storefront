@@ -8,8 +8,11 @@ importers:
       husky: ^8.0.1
       lint-staged: 13.0.3
       prettier: ^2.7.1
+      react-slideshow-image: ^4.0.4
       turbo: ^1.3.4
       typescript: 4.7.4
+    dependencies:
+      react-slideshow-image: 4.0.4_react@18.2.0
     devDependencies:
       env-cmd: 10.1.0
       husky: 8.0.1
@@ -8023,6 +8026,10 @@ packages:
 
   /@tsconfig/node16/1.0.3:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
+
+  /@tweenjs/tween.js/18.6.4:
+    resolution: {integrity: sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==}
+    dev: false
 
   /@types/aria-query/4.2.2:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
@@ -21603,6 +21610,16 @@ packages:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-slideshow-image/4.0.4_react@18.2.0:
+    resolution: {integrity: sha512-nW35/uzORyZBXHWlcftXUqXOlfsMdHSSdAC6y7C99PqKDGIGAa/SokQg+kLeFO8ZIp9hc59eW6IGklsDjJOx2A==}
+    peerDependencies:
+      react: '>=15'
+    dependencies:
+      '@tweenjs/tween.js': 18.6.4
+      react: 18.2.0
+      resize-observer-polyfill: 1.5.1
     dev: false
 
   /react-syntax-highlighter/15.5.0_react@18.2.0:
