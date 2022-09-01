@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useMainMenuQuery } from "@/saleor/api";
 
 import { IconButton } from "../CheckoutLineItem/IconButton";
-import NavIconButton from "../Navbar/NavIconButton";
+// import NavIconButton from "../Navbar/NavIconButton";
 // import { ChannelDropdown } from "../regionDropdowns/ChannelDropdown";
 // import { LocaleDropdown } from "../regionDropdowns/LocaleDropdown";
 import { useRegions } from "../RegionsProvider";
@@ -48,12 +48,18 @@ export const BurgerMenu = ({ open, onCloseClick }: BurgerMenuProps) => {
         [styles["container--open"]]: open,
       })}
     >
-      <div className={styles.backdrop} aria-hidden="true" onClick={onCloseClick} />
-      <div className={styles.body}>
-        <div className="flex justify-end items-center w-full mb-3 border-b-2 px-2 text-center">
-          <h1 className="text-4xl tracking-tight text-gray-800 mx-auto">Меню</h1>
-          <NavIconButton icon="close" onClick={onCloseClick} />
-        </div>
+      <div
+        className={clsx(styles.backdrop, {
+          [styles["backdrop--open"]]: open,
+        })}
+        aria-hidden="true"
+        onClick={onCloseClick}
+      />
+      <div
+        className={clsx(styles.body, {
+          [styles["body--open"]]: open,
+        })}
+      >
         {menu.map((item) => (
           <CollapseMenu menuItem={item} key={item.id} />
         ))}
