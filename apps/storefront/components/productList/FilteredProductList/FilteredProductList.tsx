@@ -38,11 +38,11 @@ export interface ListFilters {
   attributes: {};
 }
 
-export function FilteredProductList({
+export const FilteredProductList = ({
   attributeFiltersData,
   collectionIDs,
   categoryIDs,
-}: FilteredProductListProps) {
+}: FilteredProductListProps) => {
   const [queryFilters, setQueryFilters] = useQueryState("filters", {
     parse: parseQueryAttributeFilters,
     serialize: serializeQueryAttributeFilters,
@@ -174,7 +174,7 @@ export function FilteredProductList({
             />
           </div>
           <div className="flex-none text-main-2 text-base">
-            <div>{itemsCounter} items</div>
+            <div>{itemsCounter} товаров</div>
           </div>
         </div>
         {pills.length > 0 && (

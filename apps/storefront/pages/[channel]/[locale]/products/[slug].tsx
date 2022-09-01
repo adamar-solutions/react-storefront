@@ -2,7 +2,7 @@ import { ApolloQueryResult } from "@apollo/client";
 import { useAuthState } from "@saleor/sdk";
 import clsx from "clsx";
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
 import Custom404 from "pages/404";
 import React, { ReactElement, useState } from "react";
@@ -10,7 +10,8 @@ import { useIntl } from "react-intl";
 
 import { Layout, RichText, VariantSelector } from "@/components";
 import { AttributeDetails } from "@/components/product/AttributeDetails";
-import { ProductGallery } from "@/components/product/ProductGallery";
+// import { Slider } from "@/components/product/SlideShow";
+// import { ProductGallery } from "@/components/product/ProductGallery";
 import { useRegions } from "@/components/RegionsProvider";
 import { ProductPageSeo } from "@/components/seo/ProductPageSeo";
 import { messages } from "@/components/translations";
@@ -38,6 +39,16 @@ export const getStaticPaths: GetStaticPaths = async () => ({
   fallback: "blocking",
 });
 
+const buttonText = (selectedVariant: undefined | object, loadingAddToCheckout: boolean, t: any) => {
+  if (!selectedVariant) {
+    return t.formatMessage(messages.variantNotChosen);
+  }
+  if (loadingAddToCheckout) {
+    return t.formatMessage(messages.adding);
+  }
+  return t.formatMessage(messages.addToCart);
+};
+
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const productSlug = context.params?.slug?.toString()!;
   const response: ApolloQueryResult<ProductBySlugQuery> = await apolloClient.query<
@@ -57,7 +68,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     revalidate: 60, // value in seconds, how often ISR will trigger on the server
   };
 };
-function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
+const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const paths = usePaths();
   const t = useIntl();
@@ -154,15 +165,12 @@ function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <>
       <ProductPageSeo product={product} />
-      <main
-        className={clsx(
-          "grid grid-cols-1 gap-4 max-h-full overflow-auto md:overflow-hidden container pt-8 px-8 md:grid-cols-3"
-        )}
-      >
-        <div className="col-span-2">
-          <ProductGallery product={product} selectedVariant={selectedVariant} />
+      <main className={clsx("grid grid-cols-1 max-h-full overflow-auto md:overflow-hidden")}>
+        <div className="col-span-1">
+          {/* <ProductGallery product={product} selectedVariant={selectedVariant} /> */}
+          {/* <Slider product={product} /> */}
         </div>
-        <div className="space-y-5 mt-10 md:mt-0">
+        <div className="space-y-5 mt-4 md:mt-0 px-2">
           <div>
             <h1
               className="text-4xl font-bold tracking-tight text-gray-800"
@@ -175,13 +183,13 @@ function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>
                 {formatPrice(price)}
               </h2>
             )}
-            {!!product.category?.slug && (
+            {/* {!!product.category?.slug && (
               <Link href={paths.category._slug(product?.category?.slug).$url()} passHref>
                 <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
                   {translate(product.category, "name")}
                 </p>
               </Link>
-            )}
+            )} */}
           </div>
 
           <VariantSelector product={product} selectedVariantID={selectedVariantID} />
@@ -191,27 +199,19 @@ function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>
             type="submit"
             disabled={isAddToCartButtonDisabled}
             className={clsx(
-              "w-full py-3 px-8 flex items-center justify-center text-base bg-action-1 text-white disabled:bg-disabled hover:bg-white  border-2 border-transparent  focus:outline-none",
-              !isAddToCartButtonDisabled && "hover:border-action-1 hover:text-action-1"
+              "w-full py-3 px-8 flex items-center justify-center text-base bg-[#f1f2f3] text-black disabled:bg-[#f9fafa] hover:bg-white  border-2 border-transparent  focus:outline-none",
+              !isAddToCartButtonDisabled && "hover:border-[#f1f2f3] hover:text-[#f1f2f3]"
             )}
             data-testid="addToCartButton"
           >
-            {loadingAddToCheckout
-              ? t.formatMessage(messages.adding)
-              : t.formatMessage(messages.addToCart)}
+            {buttonText(selectedVariant, loadingAddToCheckout, t)}
           </button>
-
-          {!selectedVariant && (
-            <p className="text-base text-yellow-600">
-              {t.formatMessage(messages.variantNotChosen)}
-            </p>
-          )}
-
+          {/* 
           {selectedVariant?.quantityAvailable === 0 && (
             <p className="text-base text-yellow-600" data-testid="soldOut">
               {t.formatMessage(messages.soldOut)}
             </p>
-          )}
+          )} */}
 
           {!!addToCartError && <p>{addToCartError}</p>}
 
@@ -226,7 +226,7 @@ function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>
       </main>
     </>
   );
-}
+};
 
 export default ProductPage;
 
