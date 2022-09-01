@@ -39,6 +39,7 @@ html {
 
 body {
   touch-action: manipulation;
+  min-height: 100vh;
 }
 
 .each-slide-effect > div {
@@ -67,4 +68,10 @@ body {
     background-size: cover;
     height: 57.5vh;
   }
+}
+
+div#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
