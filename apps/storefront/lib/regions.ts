@@ -11,8 +11,9 @@ export const LOCALES = [
   { slug: "pl-PL", code: "PL_PL" as LanguageCodeEnum, name: "Polski" },
   { slug: "fr-FR", code: "FR_FR" as LanguageCodeEnum, name: "Français" },
   { slug: "vi-VN", code: "VI_VN" as LanguageCodeEnum, name: "Việt Nam" },
+  { slug: "ru-KZ", code: "RU_KZ" as LanguageCodeEnum, name: "Русский" },
 ];
-export const DEFAULT_LOCALE = "en-US";
+export const DEFAULT_LOCALE = "ru-KZ";
 
 export const CHANNEL_SLUG_KEY = "channelSlug";
 
@@ -71,7 +72,7 @@ export const localeToEnum = (localeSlug: string): LanguageCodeEnum => {
   if (chosenLocale) {
     return chosenLocale;
   }
-  return LOCALES.find(({ slug }) => slug === DEFAULT_LOCALE)?.code || "EN_US";
+  return LOCALES.find(({ slug }) => slug === DEFAULT_LOCALE)?.code || "RU_KZ";
 };
 
 export const contextToRegionQuery = (context: GetStaticPropsContext) => ({
