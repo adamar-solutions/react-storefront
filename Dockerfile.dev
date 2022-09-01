@@ -13,7 +13,16 @@ RUN pnpm install
 
 
 ARG SALEOR_API_URL
-ENV SALEOR_API_URL ${SALEOR_API_URL:-http://localhost:8000/graphql/}
+ENV SALEOR_API_URL ${SALEOR_API_URL:-https://test-env-01.saleor.cloud/graphql/}
+
+ARG NEXT_PUBLIC_STOREFRONT_NAME
+ENV NEXT_PUBLIC_STOREFRONT_NAME 'Bibotta Studio'
+
+ARG NEXT_PUBLIC_CHECKOUT_APP_URL
+ENV NEXT_PUBLIC_CHECKOUT_APP_URL http://172.17.0.2:3001
+
+ARG NEXT_PUBLIC_CHECKOUT_URL
+ENV NEXT_PUBLIC_CHECKOUT_URL http://172.17.0.2:3001/checkout-spa
 
 EXPOSE 3000
 CMD pnpm turbo run dev --parallel --cache-dir=.turbo
