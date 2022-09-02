@@ -16,7 +16,7 @@ export const PageNotFound = ({ error }: Partial<FallbackProps>) => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center pt-12">
       <div className="w-full flex justify-center">
-        <img src={getSvgSrc(SaleorLogo)} alt="logo" className="logo" />
+        {/* <img src={getSvgSrc(SaleorLogo)} alt="logo" className="logo" /> */}
       </div>
       <div className="h-full flex flex-col items-center justify-center mb-22">
         <Title className="text-center">{formatMessage("problemTitle")}</Title>
