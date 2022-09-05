@@ -1,5 +1,5 @@
 .footer {
-  @apply bottom-0 w-full;
+  @apply bottom-0 w-full mt-4;
 }
 
 .footer-inner {
