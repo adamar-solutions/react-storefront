@@ -59,6 +59,9 @@
     },
     "dev": {
       "cache": false
+    },
+    "generate": {
+      "outputs": []
     }
   },
   "globalDependencies": [".env", ".env.local"]

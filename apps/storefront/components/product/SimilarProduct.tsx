@@ -10,12 +10,12 @@ export interface SimilarProduct {
 }
 
 export const SimilarProduct = ({ product }: SimilarProduct) => (
-    <div className="flex flex-col gap-4">
-      <h4>Похожие модели</h4>
-      <div className="col-span-1">
-        <Slider product={product} />
-      </div>
+  <div className="flex flex-col gap-4">
+    <h4>Похожие модели</h4>
+    <div className="col-span-1">
+      <Slider product={product} />
     </div>
-  );
+  </div>
+);
 
 export default SimilarProduct;

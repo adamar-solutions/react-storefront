@@ -10,12 +10,14 @@ import { useIntl } from "react-intl";
 
 import { Layout, RichText, VariantSelector } from "@/components";
 import { AttributeDetails } from "@/components/product/AttributeDetails";
+import { SimilarProduct } from "@/components/product/SimilarProduct";
 import { Slider } from "@/components/product/SlideShow";
 // import { ProductGallery } from "@/components/product/ProductGallery";
 import { useRegions } from "@/components/RegionsProvider";
 import { ProductPageSeo } from "@/components/seo/ProductPageSeo";
 import { messages } from "@/components/translations";
 import apolloClient from "@/lib/graphql";
+import { mapEdgesToItems } from "@/lib/maps";
 import { usePaths } from "@/lib/paths";
 import { getSelectedVariantID } from "@/lib/product";
 import { useCheckout } from "@/lib/providers/CheckoutProvider";
@@ -28,6 +30,7 @@ import {
   ProductBySlugQueryVariables,
   useCheckoutAddProductLineMutation,
   useCreateCheckoutMutation,
+  useProductSimilarQuery,
 } from "@/saleor/api";
 
 export type OptionalQuery = {
@@ -64,11 +67,13 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   return {
     props: {
       product: response.data.product,
+      category: response.data.product?.category,
     },
     revalidate: 60, // value in seconds, how often ISR will trigger on the server
   };
 };
-const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>) => {
+
+const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const paths = usePaths();
   const t = useIntl();
@@ -78,6 +83,16 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
 
   const [createCheckout] = useCreateCheckoutMutation();
   const { user } = useAuthState();
+
+  const { data } = useProductSimilarQuery({
+    variables: {
+      category: category?.id.toString()!,
+      channel: "default-channel",
+      locale: "RU_KZ", // value for 'filter'
+    },
+  });
+
+  const similarProducts = mapEdgesToItems(data?.products);
 
   const [addProductToCheckout] = useCheckoutAddProductLineMutation();
   const [loadingAddToCheckout, setLoadingAddToCheckout] = useState(false);
@@ -183,13 +198,11 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
                 {formatPrice(price)}
               </h2>
             )}
-            {/* {!!product.category?.slug && (
-              <Link href={paths.category._slug(product?.category?.slug).$url()} passHref>
-                <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
-                  {translate(product.category, "name")}
-                </p>
-              </Link>
-            )} */}
+            {!!product.category?.slug && (
+              <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
+                {translate(product.category, "name")}
+              </p>
+            )}
           </div>
 
           <VariantSelector product={product} selectedVariantID={selectedVariantID} />
@@ -222,6 +235,11 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
           )}
 
           <AttributeDetails product={product} selectedVariant={selectedVariant} />
+          <div className="grid grid-cols-2">
+            {similarProducts.map((similarProduct) => (
+              <SimilarProduct key={similarProduct.id} product={similarProduct} />
+            ))}
+          </div>
         </div>
       </main>
     </>
