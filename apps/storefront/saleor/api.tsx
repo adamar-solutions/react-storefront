@@ -22160,6 +22160,7 @@ export type ProductCardFragment = {
   id: string;
   slug: string;
   name: string;
+  isAvailable?: boolean | null;
   translation?: { __typename?: "ProductTranslation"; id: string; name?: string | null } | null;
   thumbnail?: { __typename?: "Image"; url: string; alt?: string | null } | null;
   category?: {
@@ -24418,6 +24419,7 @@ export type ProductCollectionQuery = {
         id: string;
         slug: string;
         name: string;
+        isAvailable?: boolean | null;
         translation?: {
           __typename?: "ProductTranslation";
           id: string;
@@ -24483,6 +24485,7 @@ export type ProductSimilarQueryVariables = Exact<{
   channel: Scalars["String"];
   locale: LanguageCodeEnum;
   category: Scalars["ID"];
+  last?: InputMaybe<Scalars["Int"]>;
 }>;
 
 export type ProductSimilarQuery = {
@@ -24498,6 +24501,7 @@ export type ProductSimilarQuery = {
         id: string;
         slug: string;
         name: string;
+        isAvailable?: boolean | null;
         translation?: {
           __typename?: "ProductTranslation";
           id: string;
@@ -24920,6 +24924,7 @@ export const ProductCardFragmentDoc = gql`
     id
     slug
     name
+    isAvailable
     translation(languageCode: $locale) {
       id
       name
@@ -27149,8 +27154,8 @@ export type ProductPathsQueryResult = Apollo.QueryResult<
   ProductPathsQueryVariables
 >;
 export const ProductSimilarDocument = gql`
-  query ProductSimilar($channel: String!, $locale: LanguageCodeEnum!, $category: ID!) {
-    products(first: 2, channel: $channel, filter: { categories: [$category] }) {
+  query ProductSimilar($channel: String!, $locale: LanguageCodeEnum!, $category: ID!, $last: Int) {
+    products(channel: $channel, filter: { categories: [$category] }, last: $last) {
       totalCount
       edges {
         cursor
@@ -27178,6 +27183,7 @@ export const ProductSimilarDocument = gql`
  *      channel: // value for 'channel'
  *      locale: // value for 'locale'
  *      category: // value for 'category'
+ *      last: // value for 'last'
  *   },
  * });
  */

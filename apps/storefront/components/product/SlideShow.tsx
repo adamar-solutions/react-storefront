@@ -51,14 +51,18 @@ const properties = {
 
 export interface SliderProps {
   product: ProductDetailsFragment;
+  mainProduct: Boolean;
 }
 
-export const Slider = ({ product }: SliderProps) => {
+export const Slider = ({ product, mainProduct }: SliderProps) => {
   const galleryMedia = getGalleryMedia({ product });
   return (
     <Slide autoplay={false} transitionDuration={250} {...properties}>
       {galleryMedia?.map((media: ProductMediaFragment) => (
-        <div className="each-slide-effect" key={media.url}>
+        <div
+          className={`${mainProduct ? "each-slide-effect" : "each-slide-effect-small"}`}
+          key={media.url}
+        >
           {media.type === "IMAGE" && <div style={{ backgroundImage: `url(${media.url})` }} />}
         </div>
       ))}

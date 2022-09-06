@@ -2,6 +2,7 @@ fragment ProductCardFragment on Product {
   id
   slug
   name
+  isAvailable
   translation(languageCode: $locale) {
     id
     name
