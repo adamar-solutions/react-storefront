@@ -2,7 +2,7 @@ import { ApolloQueryResult } from "@apollo/client";
 import { useAuthState } from "@saleor/sdk";
 import clsx from "clsx";
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
-// import Link from "next/link";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Custom404 from "pages/404";
 import React, { ReactElement, useState } from "react";
@@ -16,6 +16,7 @@ import { useRegions } from "@/components/RegionsProvider";
 import { ProductPageSeo } from "@/components/seo/ProductPageSeo";
 import { messages } from "@/components/translations";
 import apolloClient from "@/lib/graphql";
+import { mapEdgesToItems } from "@/lib/maps";
 import { usePaths } from "@/lib/paths";
 import { getSelectedVariantID } from "@/lib/product";
 import { useCheckout } from "@/lib/providers/CheckoutProvider";
@@ -28,6 +29,7 @@ import {
   ProductBySlugQueryVariables,
   useCheckoutAddProductLineMutation,
   useCreateCheckoutMutation,
+  useProductSimilarQuery,
 } from "@/saleor/api";
 
 export type OptionalQuery = {
@@ -49,6 +51,8 @@ const buttonText = (selectedVariant: undefined | object, loadingAddToCheckout: b
   return t.formatMessage(messages.addToCart);
 };
 
+export const randomLast = Math.floor(Math.random() * 30);
+
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const productSlug = context.params?.slug?.toString()!;
   const response: ApolloQueryResult<ProductBySlugQuery> = await apolloClient.query<
@@ -64,11 +68,14 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   return {
     props: {
       product: response.data.product,
+      category: response.data.product?.category,
+      cursor: response,
     },
     revalidate: 60, // value in seconds, how often ISR will trigger on the server
   };
 };
-const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>) => {
+
+const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const paths = usePaths();
   const t = useIntl();
@@ -78,6 +85,18 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
 
   const [createCheckout] = useCreateCheckoutMutation();
   const { user } = useAuthState();
+
+  const { data } = useProductSimilarQuery({
+    variables: {
+      category: category?.id.toString()!,
+      channel: "default-channel",
+      locale: "RU_KZ",
+      last: randomLast,
+    },
+  });
+
+  const similarProducts = mapEdgesToItems(data?.products).filter((e) => e.id !== product?.id);
+  const randomSimilarProducts = similarProducts.sort(() => 0.5 - Math.random()).slice(0, 2);
 
   const [addProductToCheckout] = useCheckoutAddProductLineMutation();
   const [loadingAddToCheckout, setLoadingAddToCheckout] = useState(false);
@@ -168,7 +187,7 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
       <main className={clsx("grid grid-cols-1 max-h-full overflow-auto md:overflow-hidden")}>
         <div className="col-span-1">
           {/* <ProductGallery product={product} selectedVariant={selectedVariant} /> */}
-          <Slider product={product} />
+          <Slider product={product} mainProduct />
         </div>
         <div className="space-y-5 mt-4 md:mt-0 px-2">
           <div>
@@ -183,13 +202,11 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
                 {formatPrice(price)}
               </h2>
             )}
-            {/* {!!product.category?.slug && (
-              <Link href={paths.category._slug(product?.category?.slug).$url()} passHref>
-                <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
-                  {translate(product.category, "name")}
-                </p>
-              </Link>
-            )} */}
+            {!!product.category?.slug && (
+              <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
+                {translate(product.category, "name")}
+              </p>
+            )}
           </div>
 
           <VariantSelector product={product} selectedVariantID={selectedVariantID} />
@@ -222,6 +239,28 @@ const ProductPage = ({ product }: InferGetStaticPropsType<typeof getStaticProps>
           )}
 
           <AttributeDetails product={product} selectedVariant={selectedVariant} />
+          <div className="grid grid-cols-2 gap-2">
+            <p className="col-span-2 font-bold text-[18px] text-[#484848]">Похожие модели</p>
+            {randomSimilarProducts.map((similarProduct) => (
+              <div>
+                <Slider key={similarProduct.id} product={similarProduct} mainProduct={false} />
+                <Link
+                  href={paths.products._slug(similarProduct.slug).$url()}
+                  prefetch={false}
+                  passHref
+                >
+                  <a href="pass" className="flex flex-col w-full">
+                    <h1
+                      className="text-base font-medium tracking-tight text-gray-600"
+                      data-testid="productName"
+                    >
+                      {translate(similarProduct, "name")}
+                    </h1>
+                  </a>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </>

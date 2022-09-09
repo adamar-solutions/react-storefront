@@ -19805,7 +19805,7 @@ export type User = Node &
   ObjectWithMetadata & {
     __typename?: "User";
     /** List of all user's addresses. */
-    addresses: Array<Address>;
+    addresses?: Maybe<Array<Address>>;
     avatar?: Maybe<Image>;
     /**
      * Returns the last open checkout of this user.
@@ -22086,7 +22086,7 @@ export type UserQuery = {
   me?: {
     __typename?: "User";
     id: string;
-    addresses: Array<{
+    addresses?: Array<{
       __typename?: "Address";
       id: string;
       city: string;
@@ -22100,7 +22100,7 @@ export type UserQuery = {
       firstName: string;
       lastName: string;
       country: { __typename?: "CountryDisplay"; country: string; code: string };
-    }>;
+    }> | null;
     defaultBillingAddress?: {
       __typename?: "Address";
       id: string;

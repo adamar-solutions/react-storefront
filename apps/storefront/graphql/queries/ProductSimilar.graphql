@@ -1,0 +1,11 @@
+query ProductSimilar($channel: String!, $locale: LanguageCodeEnum!, $category: ID!, $last: Int) {
+  products(channel: $channel, filter: { categories: [$category] }, last: $last) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ProductCardFragment
+      }
+    }
+  }
+}

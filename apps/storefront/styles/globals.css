@@ -52,7 +52,7 @@ body {
   -moz-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
-  height: 57.5vh;
+  height: 57vh;
 }
 
 @media (max-width: 414px) {
@@ -66,7 +66,35 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 57.5vh;
+    height: 57vh;
+  }
+}
+
+.each-slide-effect-small > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  height: 35vh;
+}
+
+@media (max-width: 414px) {
+  .each-slide-effect > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 35vh;
   }
 }
 

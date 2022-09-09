@@ -96649,19 +96649,15 @@
             "description": "List of all user's addresses.",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Address",
-                    "ofType": null
-                  }
+                  "kind": "OBJECT",
+                  "name": "Address",
+                  "ofType": null
                 }
               }
             },

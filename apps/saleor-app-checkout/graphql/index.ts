@@ -19805,7 +19805,7 @@ export type User = Node &
   ObjectWithMetadata & {
     __typename?: "User";
     /** List of all user's addresses. */
-    addresses: Array<Address>;
+    addresses?: Maybe<Array<Address>>;
     avatar?: Maybe<Image>;
     /**
      * Returns the last open checkout of this user.
