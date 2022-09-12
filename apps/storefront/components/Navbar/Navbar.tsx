@@ -46,30 +46,30 @@ export const Navbar = () => {
 
   return (
     <div className={clsx(styles.navbar)}>
-        <div className={clsx(styles.inner)}>
-          <NavIconButton
-            icon={isBurgerOpen ? "close" : "menu"}
-            className={`lg:hidden ${isBurgerOpen ? "ml-4" : "ml-2"}`}
-            onClick={() => {
-              if (isBurgerOpen) {
-                setBurgerOpen(false);
-              } else {
-                setBurgerOpen(true);
-              }
-            }}
-          />
-          <div className="flex-1 h-full hidden xs:flex">
-            <Menu />
-          </div>
-          <div className="flex-1 flex xs:justify-center">
-            <Link href={paths.$url()} passHref>
-              <a href="pass" className={styles.logo}>
-                <Stamp />
-              </a>
-            </Link>
-          </div>
-          <div className="flex-1 flex justify-end">
-            {/* {!authenticated ? (
+      <div className={clsx(styles.inner)}>
+        <NavIconButton
+          icon={isBurgerOpen ? "close" : "menu"}
+          className={`lg:hidden ${isBurgerOpen ? "ml-4" : "ml-2"}`}
+          onClick={() => {
+            if (isBurgerOpen) {
+              setBurgerOpen(false);
+            } else {
+              setBurgerOpen(true);
+            }
+          }}
+        />
+        <div className="flex-1 h-full hidden xs:flex">
+          <Menu />
+        </div>
+        <div className="flex-1 flex xs:justify-center">
+          <Link href={paths.$url()} passHref>
+            <a href="pass" className={styles.logo}>
+              <Stamp />
+            </a>
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-end">
+          {/* {!authenticated ? (
               <Link href={paths.account.login.$url()} passHref>
                 <a href="pass">
                   <NavIconButton icon="user" aria-hidden="true" />
@@ -78,23 +78,23 @@ export const Navbar = () => {
             ) : (
               <UserMenu />
             )} */}
-            <Link href={paths.cart.$url()} passHref>
-              <a href="pass" className="ml-2 hidden xs:flex">
-                <NavIconButton icon="bag" aria-hidden="true" counter={counter} />
-              </a>
-            </Link>
-            {/* <Link href={paths.search.$url()} passHref>
+          <Link href={paths.cart.$url()} passHref>
+            <a href="pass" className="ml-2 hidden xs:flex">
+              <NavIconButton icon="bag" aria-hidden="true" counter={counter} />
+            </a>
+          </Link>
+          {/* <Link href={paths.search.$url()} passHref>
               <a href="pass" className="hidden xs:flex ml-2">
                 <NavIconButton icon="spyglass" data-testid="searchIcon" />
               </a>
             </Link> */}
-          </div>
-        </div>
-        <div>
-          {" "}
-          <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
         </div>
       </div>
+      <div>
+        {" "}
+        <BurgerMenu open={isBurgerOpen} onCloseClick={() => setBurgerOpen(false)} />
+      </div>
+    </div>
   );
 };
 
