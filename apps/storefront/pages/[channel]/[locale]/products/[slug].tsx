@@ -236,8 +236,16 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
           )} */}
 
           {!!addToCartError && <p>{addToCartError}</p>}
-
-          <AttributeDetails product={product} selectedVariant={selectedVariant} />
+          <details className="bg-[#f9fafa] open:bg-[#f1f2f3] duration-100">
+            <summary className="bg-inherit px-5 py-3 text-md cursor-pointer">Свойства</summary>
+            <div className="bg-white px-5 py-3 border border-[#f1f2f3] text-sm font-light">
+              <AttributeDetails
+                product={product}
+                selectedVariant={selectedVariant}
+                layoutState={false}
+              />
+            </div>
+          </details>
           {product.media.map((img) => (
             <div className="mt-4">
               <Image

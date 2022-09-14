@@ -238,7 +238,11 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
             </div>
           )}
 
-          <AttributeDetails product={product} selectedVariant={selectedVariant} />
+          <AttributeDetails
+            product={product}
+            selectedVariant={selectedVariant}
+            layoutState
+          />
           <div className="grid grid-cols-2 gap-2">
             <p className="col-span-2 font-bold text-[18px] text-[#484848]">Похожие модели</p>
             {randomSimilarProducts.map((similarProduct) => (
