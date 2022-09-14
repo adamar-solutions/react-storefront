@@ -2,7 +2,6 @@ import { ApolloQueryResult } from "@apollo/client";
 import { useAuthState } from "@saleor/sdk";
 import clsx from "clsx";
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Custom404 from "pages/404";
@@ -12,6 +11,7 @@ import { useIntl } from "react-intl";
 import { Layout, RichText, VariantSelector } from "@/components";
 import { AttributeDetails } from "@/components/product/AttributeDetails";
 import { Slider } from "@/components/product/SlideShow";
+// import { ProductGallery } from "@/components/product/ProductGallery";
 import { useRegions } from "@/components/RegionsProvider";
 import { ProductPageSeo } from "@/components/seo/ProductPageSeo";
 import { messages } from "@/components/translations";
@@ -79,7 +79,7 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
   const router = useRouter();
   const paths = usePaths();
   const t = useIntl();
-  const { currentChannel, query } = useRegions();
+  const { currentChannel, formatPrice, query } = useRegions();
 
   const { checkoutToken, setCheckoutToken, checkout } = useCheckout();
 
@@ -178,25 +178,16 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
 
   const description = translate(product, "description");
 
-  // const price = product.pricing?.priceRange?.start?.gross;
-  // const shouldDisplayPrice = product.variants?.length === 1 && price;
-  const mainImage = product?.media[0];
+  const price = product.pricing?.priceRange?.start?.gross;
+  const shouldDisplayPrice = product.variants?.length === 1 && price;
 
   return (
     <>
       <ProductPageSeo product={product} />
       <main className={clsx("grid grid-cols-1 max-h-full overflow-auto md:overflow-hidden")}>
         <div className="col-span-1">
-          <Image
-            src={mainImage.url}
-            alt={mainImage.alt}
-            role="button"
-            tabIndex={-2}
-            width={1598}
-            height={2400}
-            layout="responsive"
-            priority
-          />
+          {/* <ProductGallery product={product} selectedVariant={selectedVariant} /> */}
+          <Slider product={product} mainProduct />
         </div>
         <div className="space-y-5 mt-4 md:mt-0 px-2">
           <div>
@@ -206,11 +197,15 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
             >
               {translate(product, "name")}
             </h1>
-
-            {description && (
-              <div className="space-y-6">
-                <RichText jsonStringData={description} />
-              </div>
+            {shouldDisplayPrice && (
+              <h2 className="text-xl font-bold tracking-tight text-gray-800">
+                {formatPrice(price)}
+              </h2>
+            )}
+            {!!product.category?.slug && (
+              <p className="text-lg mt-2 font-medium text-gray-600 cursor-pointer">
+                {translate(product.category, "name")}
+              </p>
             )}
           </div>
 
@@ -236,30 +231,18 @@ const ProductPage = ({ product, category }: InferGetStaticPropsType<typeof getSt
           )} */}
 
           {!!addToCartError && <p>{addToCartError}</p>}
-          <details className="bg-[#f9fafa] open:bg-[#f1f2f3] duration-100">
-            <summary className="bg-inherit px-5 py-3 text-md cursor-pointer">Свойства</summary>
-            <div className="bg-white px-5 py-3 border border-[#f1f2f3] text-sm font-light">
-              <AttributeDetails
-                product={product}
-                selectedVariant={selectedVariant}
-                layoutState={false}
-              />
+
+          {description && (
+            <div className="space-y-6">
+              <RichText jsonStringData={description} />
             </div>
-          </details>
-          {product.media.map((img) => (
-            <div className="mt-4">
-              <Image
-                src={img.url}
-                alt={img.alt}
-                role="button"
-                tabIndex={-2}
-                width={1598}
-                height={2400}
-                layout="responsive"
-                priority
-              />
-            </div>
-          ))}
+          )}
+
+          <AttributeDetails
+            product={product}
+            selectedVariant={selectedVariant}
+            layoutState
+          />
           <div className="grid grid-cols-2 gap-2">
             <p className="col-span-2 font-bold text-[18px] text-[#484848]">Похожие модели</p>
             {randomSimilarProducts.map((similarProduct) => (

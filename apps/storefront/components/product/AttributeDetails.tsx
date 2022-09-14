@@ -9,9 +9,14 @@ import { messages } from "../translations";
 export interface AttributeDetailsProps {
   product: ProductDetailsFragment;
   selectedVariant?: ProductVariantDetailsFragment;
+  layoutState: Boolean;
 }
 
-export const AttributeDetails = ({ product, selectedVariant }: AttributeDetailsProps) => {
+export const AttributeDetails = ({
+  product,
+  selectedVariant,
+  layoutState,
+}: AttributeDetailsProps) => {
   const t = useIntl();
   const attributes = getProductAttributes(product, selectedVariant);
   if (attributes.length === 0) {
@@ -19,9 +24,11 @@ export const AttributeDetails = ({ product, selectedVariant }: AttributeDetailsP
   }
   return (
     <div>
-      <p className="text-lg mt-2 font-medium text-gray-500">
-        {t.formatMessage(messages.attributes)}
-      </p>
+      {layoutState && (
+        <p className="text-lg mt-2 font-medium text-gray-500">
+          {t.formatMessage(messages.attributes)}
+        </p>
+      )}
       <div>
         {attributes.map((attribute) => (
           <div key={attribute.attribute.id} className="grid grid-cols-2">
